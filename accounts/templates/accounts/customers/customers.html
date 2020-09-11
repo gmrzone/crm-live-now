@@ -1,0 +1,91 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+    {% block cssfile %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/customers.css' %}">
+    {% endblock %}
+{% block title %}
+<title>Customers</title>
+{% endblock %}
+{% block content %}
+<br>
+<div class="login-mssg">
+	<h3>Welcome {{request.user}}</h3>
+	<a class="logout-button" href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Customer:&nbsp;{{customers_detail.name.upper}}</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_customer' customers_detail.id %}">Update Customer</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'create_order_customer' customers_detail.id %}">Place Order</a>
+			<a class="btn btn-outline-primary  btn-sm btn-block" href="{% url 'multiple_order' customers_detail.id %}">Place Multiple Order</a>
+			<img src="{{request.user.customers.profile_pic.url}}" height="183px" width="183px">
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Contact Information</h5>
+			<hr>
+			<p>Email: <strong>{{customers_detail.email}}</strong></p>
+			<p>Phone: <strong>{{customers_detail.phone}}</strong></p>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total Orders</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px">{{customers_detail.order_set.all.count}}</h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+				{{filterform.form}}
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Product</th>
+					<th>Category</th>
+					<th>Date Orderd</th>
+					<th>Status</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+				<!-- iterate over all custumer order -->
+				{% for i in filterform.qs %} <!--using filterform.qs instead of customers_details.order_set.all() because we have used django_filter to filter based on search query in this section -->
+				<tr>
+					<td>{{i.products.name.upper}}</td>
+					<td>{{i.products.category.upper}}</td>
+					<td>{{i.date_created}}</td>
+					<td>{{i.status}}</td>
+					<td><a href="" class="btn btn-sm btn-success">Update</a></td>
+					<td><a href="" class="btn btn-sm btn-danger">Remove</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+    
+{% endblock %}
+

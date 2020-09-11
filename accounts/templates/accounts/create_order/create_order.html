@@ -1,0 +1,47 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block cssfile %}<link rel="stylesheet" type="text/css" href="{% static '/css/update_orders.css' %}">{% endblock %}
+
+
+
+{% block title %}
+<title>Update_order</title>
+{% endblock %}
+
+    {% block content %}
+    <div class="login-mssg">
+        <h3>Welcome {{request.user}}</h3>
+        <a class="logout-button" href="{% url 'logout' %}">Logout</a>
+    </div>
+    <div class="widget-container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {% if Order_form_set %}                       <!--only Render if using order_form set--> 
+            Order For User : {{selected_cust.name.upper}}<br>
+            {{Order_form_set.management_form }}
+        {% endif %}                                   <!-- End Conditional Statement-->
+        
+        {% for form in Order_form_set %}
+        {{form}}                            <!--This Form is to Place Multiple Order We HAve To Iterate Over Because it Conatins Multiple Form using inlineformset-->
+        <hr>
+        {% endfor %}
+        <!-- Single Order fORM -->
+        <div class="field-div">
+        {{Order_form.customer.label}}        <!--This template tag is for single form using form model from forms.py-->
+        {{Order_form.customer}} 
+        </div>
+        <div class="field-div">
+        {{Order_form.products.label}} 
+        {{Order_form.products}}
+        </div>
+        <div class="field-div">
+        {{Order_form.status.label}}   
+        {{Order_form.status}}
+        </div>
+        <div class="buttons-main">
+        <input type="submit" name="Submit">
+         </div>
+    </form>
+    </div>
+    {% endblock %}

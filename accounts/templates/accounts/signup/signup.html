@@ -1,0 +1,37 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block cssfile %} <link rel="stylesheet" type="text/css" href="{% static '/css/signup.css' %}">{% endblock%}
+{% block title %}<title>Signup</title>{% endblock %}
+
+{% block content %}
+<h2 class="signup-title">Signup</h2>
+<form method="POST" action="">
+    {% csrf_token %}    
+    <div class="widget-container">
+    <div class="username-fields field-div">
+        <label for="username">Username</label>
+        {{signup_form.username}}
+    </div>
+    <div class="email-fields field-div">
+        <label for="email">Email</label>
+        {{signup_form.email}}
+    </div>
+    <div class="password-fields field-div">
+        <label for="password1">Password</label>
+        {{signup_form.password1}}
+    </div>
+    <div class="password-fields field-div"> 
+        <label for="password2">Confirm Password</label>
+        {{signup_form.password2}}
+    </div>
+    <div class="buttons-main">
+    <input type="submit" name="submit" value="Signup">
+    <a href="" class="cancel-button">Cancel</a>
+    </div>
+    <p class="error-mssg">{{signup_form.errors}}</p>
+    <p style="text-align: center;">Already Have an Account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+
+</form>
+{% endblock %}
+{% block js %}<script src="{% static '/js/signup.js' %}"></script>{% endblock %}

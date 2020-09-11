@@ -1,0 +1,17 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block title %}<title>Delete {{customer.name}}</title>
+<style>#wrapper {height: calc(100vh - 74px - 33px - 122px - 15px);}</style>{% endblock %}
+
+{% block content %}
+<form action="" method="POST"> 
+    <div class="login-mssg">
+        <h3>Welcome {{request.user}}</h3>
+        <a class="logout-button" href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% csrf_token %}
+    {{del_form}}
+<input type="submit" name="submit">
+</form>
+{% endblock %}

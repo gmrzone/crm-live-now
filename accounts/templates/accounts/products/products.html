@@ -1,0 +1,46 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+    {% block cssfile %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/products.css' %}">
+    {% endblock %}
+{% block title %}
+<title>Products</title>
+{% endblock %}
+{% block content %}
+
+<br>
+<div class="login-mssg">
+    <h3>Welcome {{request.user}}</h3>
+    <a class="logout-button" href="{% url 'logout' %}">Logout</a>
+</div>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Products</h5>
+            <form method="get">
+                {{Product_filter.form}}
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                </tr>
+                {% for product in Product_filter.qs %} <!--Using Product_filter.qs insteda fo all product bcoz we are using django_filter to filter data using fielter fields-->
+                <tr>
+                    <td>{{product.name.upper}}</td>
+                    <td>{{product.category.upper}}</td>
+                    <td>{{product.price}}</td>
+                </tr>
+                {% endfor %}
+                
+            </table>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+

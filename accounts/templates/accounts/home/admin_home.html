@@ -1,0 +1,83 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+    {% block cssfile %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/dashboard.css' %}">
+    {% endblock %}
+{% block title %}
+<title>Dashboard</title>
+<style>
+	.card-body form label {
+    display: block;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{% include 'accounts/status.html' %}
+<br>
+<div class="login-mssg">
+	<h3>Welcome {{request.user}}</h3>
+	<a class="logout-button" href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>CUSTOMERS:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_customer' %}">Create Customer</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Customer</th>
+					<th>Phone</th>
+					<th>Details</th>
+					<th>Update</th>
+				</tr>
+				{% for cust in customers_list%}
+				<tr>
+					<td><a href="{% url 'afzal' cust.id %}">{{cust.name.upper}}</a></td>
+					<td>{{cust.phone}}</td>
+					<td><a href="{% url 'afzal' cust.id %}" class="btn btn-sm btn-success">View</a></td>
+					<td><a href="{% url 'update_customer' cust.id %}" class="btn btn-sm btn-primary">Update</a></td>
+				</tr>
+				{% endfor%}
+			</table>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'delete_customer' %}" style="background: red;">Delete Customer</a>	
+		</div>
+	</div>
+
+	<div class="col-md-7">		
+		<h5>LAST 5 ORDERS</h5>
+		<hr>	
+		<form method="get">
+		{{order_filter_form.form}}<br>
+		<button class="btn btn-primary" type="submit">Search</button>
+	 	 </form>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_order' %}">Create Order</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Product</th>
+					<th>Date Orderd</th>
+					<th>Status</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+				{% for order in order_filter_form.qs %} <!--Using filter_form.qs instead of all orders bcoz django filter is applied-->
+				<tr>
+					<td>{{order.products.name.upper}}</td>
+					<td>{{order.date_created}}</td>
+					<td>{{order.status.upper}}</td>
+					<td><a href="{% url 'update_order' order.id %}" class="btn btn-sm btn-success">Update</a></td>
+					<td><a href="{% url 'delete_order' order.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+					<td></td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+
+</div>  
+
+{% endblock %}
+

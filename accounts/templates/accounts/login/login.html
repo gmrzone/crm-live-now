@@ -1,0 +1,31 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block cssfile %} <link rel="stylesheet" type="text/css" href="{% static '/css/signup.css' %}">{% endblock%}
+{% block title %}<title>Login</title>{% endblock %}
+
+{% block content %}
+<h2 class="signup-title">Login</h2>
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="widget-container">
+    <div class="username-fields field-div">
+        <label for="username">Username</label>
+        <input type="text" placeholder="Username" name="username">
+    </div>
+    <div class="password-fields field-div">
+        <label for="password1">Password</label>
+        <input type="password" placeholder="Password" name='password'>
+    </div>
+    <div class="buttons-main">
+    <input type="submit" name="submit" value="Login">
+    <a href="" class="cancel-button">Cancel</a>
+    </div>
+    {% for i in messages %}
+    <p class="success-message">{{i}}</p>
+    {% endfor %}
+    <p style="text-align: center;">Dont Have An Account? <a href="{% url 'signup' %}">Signup</a></p>
+    <p style="text-align: center;">Dont Remember Passrowd Try Resetting it in <a href="{% url 'reset_password' %}"> Account Recovery</a></p>
+    </div>
+
+</form>
+{% endblock %}

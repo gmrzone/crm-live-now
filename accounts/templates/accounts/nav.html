@@ -1,0 +1,25 @@
+<header class="main-header">
+    <a href="{% url 'home' %}" class="main-title"><h1 class="main-logo">Dashboard</h1></a>
+
+    {% if request.user.is_authenticated %}  <!--Only Show Navigation if User Login is Authenticated-->
+    <button class="mobile-nav-open-button">
+        <span class="mobile-nav-open-button_items"></span>
+        <span class="mobile-nav-open-button_items"></span>
+        <span class="mobile-nav-open-button_items"</span>
+    </button>
+    <div class="back-model2"></div>
+
+    <nav class="main-nav">
+        <div class="close-button"><h3>X</h3></div>
+        <ul class="main-nav-items">
+            <li class="main-nav-item"><a href="{% url 'home' %}" class="nav-item">Dashboard</a></li>
+            <li class="main-nav-item"><a href="{% url 'products' %}" class="nav-item">Products</a></li>
+            <li class="main-nav-item"><a href="{% url 'afzal' request.user.customers.id %}" class="nav-item" aria-disabled="">Profile</a></li>
+            <li class="main-nav-item"><a href="{% url 'account_settings' %}" class="nav-item">Settings</a></li>
+            <!-- {% if request.user.is_staff %} -->
+            
+            <!-- {% endif %} -->
+        </ul>
+    </nav>
+    {% endif %}             <!--End Statement-->
+</header>

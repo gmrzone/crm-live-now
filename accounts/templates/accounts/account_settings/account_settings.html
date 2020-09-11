@@ -1,0 +1,56 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block cssfile %}
+<link rel="stylesheet" type="text5/css" href="{% static '/css/account_settings.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>Account Settings</title>
+{% endblock %}
+
+{% block content %}
+<div class="login-mssg">
+	<h3>Welcome {{request.user}}</h3>
+	<a class="logout-button" href="{% url 'logout' %}">Logout</a>
+</div>
+<br>
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+            <h5>Customer:&nbsp;{{request.user.customers.name.upper}}</h5>
+			<h5>Designation:&nbsp;{{designation}}</h5>
+			<a href="{% url 'afzal' request.user.customers.id %}" class="btn btn-warning">&#8592; Back To Profile</a>
+			<hr>
+<form method="POST" action="" enctype='multipart/form-data'>
+	{% csrf_token %}
+            <!-- <div class="col-xs-12 col-sm-6 col-md-3 member" style="min-height:256px;"> -->
+			<img class="profile-pic" src="{{request.user.customers.profile_pic.url}}" 	>
+			{{profile_form.profile_pic}}
+            <!-- </div> -->
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Update Profile Information</h5>
+			<hr>
+			<p>{{profile_form.name.label}} : {{profile_form.name}}</p>
+			<p>{{profile_form.phone.label}} : {{profile_form.phone}}</p>
+			<p>{{profile_form.email.label}} : {{profile_form.email}}</p>
+	<input type="submit" value="Update">
+</form>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total Orders</h5>
+			<hr>
+            <h1 style="text-align: center;padding: 10px">{{request.user.customers.order_set.all.count}}</h1>
+            <a href="{% url 'create_order_customer' request.user.customers.id %}">Place Order</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

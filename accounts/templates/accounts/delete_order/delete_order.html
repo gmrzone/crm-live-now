@@ -1,0 +1,25 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block cssfile %}<link rel="stylesheet" type="text/css" href="{% static '/css/delete_order.css' %}">{% endblock %}
+
+{% block title %} <title>Delete Order {{order.products.name}}</title> <style>#wrapper {
+    height: calc(100vh - 74px - 33px - 122px - 15px);
+}</style>{% endblock %}
+
+{% block content %}
+<div class="login-mssg">
+    <h3>Welcome {{request.user}}</h3>
+    <a class="logout-button" href="{% url 'logout' %}">Logout</a>
+</div>
+<div class="form-container" style="text-align: center; padding: 20px; border: 1px solid black; box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.300);">
+    <h3>Are You Sure That You Want To Delete Order for {{order.products.name}}{{customer.name}} ?</h3>
+    <div class="button_container">
+        <form action="" method="POST">
+            {% csrf_token %}
+        <a href="{% url 'home' %}" style="display: inline-block; color: white; background: #03c9a8; padding: 3px 15px; text-decoration: none;">No</a>
+        <button type="submit" style="display: inline-block; color: white; background: red; padding: 3px 15px; border: none;">Yes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

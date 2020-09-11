@@ -1,0 +1,41 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block cssfile %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/dashboard.css' %}">
+{% endblock %}
+{% block title %}
+<title>User Dashboard</title>
+{% endblock %}
+
+{% block content %}
+{% include 'accounts/status.html' %}
+<br>
+<div class="login-mssg">
+	<h3>Welcome {{request.user}}</h3>
+	<a class="logout-button" href="{% url 'logout' %}">Logout</a>
+</div>
+<br>	
+    <form method="get">
+    {{order_filter_form.form}}<br>
+    <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+<div class="card card-body">
+    <h5>LAST 5 ORDERS</h5>
+    <hr>
+    <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_order' %}">Create Order</a>
+    <table class="table table-sm">
+        <tr>
+            <th>Product</th>
+            <th>Date Orderd</th>
+            <th>Status</th>
+        </tr>
+        {% for order in order_list %} <!--Using filter_form.qs instead of all orders bcoz django filter is applied-->
+        <tr>
+            <td>{{order.products.name.upper}}</td>
+            <td>{{order.date_created}}</td>
+            <td>{{order.status.upper}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
